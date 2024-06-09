@@ -16,6 +16,7 @@ class Table extends HTMLElement {
       {
         "id": 1,
         "name": "Joe Schilder",
+        "email": "aaaa@gmail.com",
         "telephone": "+1 (731) 342-9783",
         "age": 39,
         "country": "Canada",
@@ -24,6 +25,7 @@ class Table extends HTMLElement {
       {
         "id": 2,
         "name": "Phoebe Venturi",
+        "email": "bbbb@gmail.com",
         "telephone": "+1 (887) 744-6950",
         "age": 52,
         "country": "Thailand",
@@ -32,6 +34,7 @@ class Table extends HTMLElement {
       {
         "id": 3,
         "name": "Caroline Pandolfi",
+        "email": "cccc@gmail.com",
         "telephone": "+1 (618) 787-3453",
         "age": 45,
         "country": "Barbados",
@@ -82,6 +85,10 @@ class Table extends HTMLElement {
           font-size: 1rem;
         }
 
+        .dropdown {
+          border-color: cyan;
+        }
+
         .add-customer {
           padding: 0rem 2rem;
           border: none;
@@ -97,41 +104,70 @@ class Table extends HTMLElement {
           width: 100rem;
         }
 
+        tr {
+          border: 1px solid #dddddd;
+        }
+
         th {
           background-color: hsla(100, 0%, 93%, 1);
-          border: 1px solid #dddddd;
           text-align: left;
           padding: 1rem;
         }
 
         td {
-          border: 1px solid #dddddd;
           text-align: left;
           padding: 1rem;
         }
 
+        .email {
+          color: gray;
+        }
+
+        .user-icon img {
+          width: 2rem;
+          height: 2rem;
+          align-items: center;
+        }
+
+        .user-data {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+
+        .user-data p {
+          margin: 0.5rem;
+        }
+
         .accepted {
+          align-items: center;
+        }
+
+        .accepted p {
           text-align: center;
-          padding: 0px;
           color: green;
           background-color: lightgreen;
           border-radius: 1rem;
+          width: 5rem;
+          padding: 0.3rem;
         }
 
-        .rejected {
+        .rejected p {
           text-align: center;
-          padding: 0;
           color: red;
           background-color: pink;
           border-radius: 1rem;
+          width: 5rem;
+          padding: 0.3rem;
         }
 
-        .pending {
+        .pending p {
           text-align: center;
-          padding: 0;
           color: blue;
           background-color: lightblue;
           border-radius: 1rem;
+          width: 5rem;
+          padding: 0.3rem;
         }
       </style>
 
@@ -180,9 +216,30 @@ class Table extends HTMLElement {
         userID.textContent = userItem.id
         tableItem.appendChild(userID)
 
-        const userName = document.createElement('td')
+        const userData = document.createElement('td')
+        userData.classList.add('user-data')
+        tableItem.appendChild(userData)
+
+        const userIcon = document.createElement('div')
+        userIcon.classList.add('user-icon')
+        userData.appendChild(userIcon)
+
+        const userImage = document.createElement('img')
+        userImage.setAttribute('src', 'profile.png')
+        userIcon.appendChild(userImage)
+
+        const userInfo = document.createElement('div')
+        userInfo.classList.add('user-info')
+        userData.appendChild(userInfo)
+
+        const userName = document.createElement('p')
         userName.textContent = userItem.name
-        tableItem.appendChild(userName)
+        userInfo.appendChild(userName)
+
+        const userEmail = document.createElement('p')
+        userEmail.classList.add('email')
+        userEmail.textContent = userItem.email
+        userInfo.appendChild(userEmail)
 
         const userContact = document.createElement('td')
         userContact.textContent = userItem.telephone
@@ -197,16 +254,21 @@ class Table extends HTMLElement {
         tableItem.appendChild(userCountry)
 
         const userStatus = document.createElement('td')
-        userStatus.textContent = userItem.status
+        tableItem.appendChild(userStatus)
+
+        const stat = document.createElement('p')
+        stat.textContent = userItem.status
 
         if (userItem.status === 'Verified') {
+          console.log('test')
           userStatus.classList.add('accepted')
         } else if (userItem.status === 'Rejected') {
           userStatus.classList.add('rejected')
         } else if (userItem.status === 'Pending') {
           userStatus.classList.add('pending')
         }
-        tableItem.appendChild(userStatus)
+
+        userStatus.appendChild(stat)
 
         const userActions = document.createElement('td')
         tableItem.appendChild(userActions)
